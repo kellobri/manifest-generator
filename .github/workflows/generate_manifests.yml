@@ -21,11 +21,21 @@ jobs:
       env: 
         R_VERSION: ${{ env.R_VERSION }}
 
+    - name: Install rsconnect
+      run: |
+        options(repos = c(REPO_NAME = "https://packagemanager.rstudio.com/all/__linux__/focal/latest"))
+        install.packages('rsconnect')
+      shell: Rscript {0}
+
+    - name: Copy content to bundle
+      run: |
+        mkdir ${{ env.BUNDLE_PATH }}
+        cp ${{ env.CONTENT_PATH }} ${{ env.BUNDLE_PATH }}
+
     - name: Generate manifest.json
-      run: sudo Rscript utils/write-manifest.R
-      env: 
-        R_VERSION: ${{ env.R_VERSION }}
-        CONTENT_PATH: ${{ env.CONTENT_PATH}}
+      run: |
+        rsconnect::writeManifest(appDir = "${{ env.BUNDLE_PATH }}")
+      shell: Rscript {0}
 
     - name: Push the new manifest to the repo
       run: |
