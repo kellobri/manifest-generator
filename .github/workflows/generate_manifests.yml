@@ -23,6 +23,9 @@ jobs:
 
     - name: Generate manifest.json
       run: sudo Rscript utils/write-manifest.R
+      env: 
+        R_VERSION: ${{ env.R_VERSION }}
+        CONTENT_PATH: ${{ env.CONTENT_PATH}}
 
     - name: Push the new manifest to the repo
       run: |
