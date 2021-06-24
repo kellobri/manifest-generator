@@ -16,11 +16,9 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install R
-        run: utils/install-r.sh
-        shell: bash
+        run: bash utils/install-r.sh
         env: 
           R_VERSION: ${{ env.R_VERSION }}
 
     - name: Generate manifest.json
-        run: utils/write-manifest.R
-        shell: Rscript {0}
+        run: Rscript utils/write-manifest.R
