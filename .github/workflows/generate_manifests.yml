@@ -11,6 +11,7 @@ jobs:
     env:
       CONTENT_PATH: "content/document.Rmd"
       R_VERSION: 4.0.5
+      BUNDLE_PATH: "bundles-4.0.5/"
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
     - uses: actions/checkout@v2
@@ -22,3 +23,11 @@ jobs:
 
     - name: Generate manifest.json
       run: sudo Rscript utils/write-manifest.R
+
+    - name: Push the new file to the repo
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add ${{ env.BUNDLE_PATH }}
+        git commit -m "GH ACTION - manifest file generated"
+        git push -q
