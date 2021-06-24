@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - main
+
+name: generate-manifests
+
+jobs:
+  generate-manifests:
+    runs-on: ubuntu-latest
+    env:
+      CONTENT_PATH: "content/document.Rmd"
+      R_VERSION: 4.0.5
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install R
+        run: utils/install-r.sh
+        shell: bash
+        env: 
+          R_VERSION: ${{ env.R_VERSION }}
+
+    - name: Generate manifest.json
+        run: utils/write-manifest.R
+        shell: Rscript {0}
