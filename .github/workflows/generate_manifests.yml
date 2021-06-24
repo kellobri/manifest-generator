@@ -21,4 +21,4 @@ jobs:
         R_VERSION: ${{ env.R_VERSION }}
 
     - name: Generate manifest.json
-      run: Rscript utils/write-manifest.R
+      run: sudo Rscript utils/write-manifest.R
